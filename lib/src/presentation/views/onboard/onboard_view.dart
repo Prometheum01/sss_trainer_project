@@ -4,6 +4,7 @@ import 'package:sss_trainer_project/src/utils/constants/colors.dart';
 
 import '../../../utils/constants/images.dart';
 import '../../widgets/buttons/main_elevated_button.dart';
+import 'onboard_view_model.dart';
 
 class OnboardView extends StatefulWidget {
   const OnboardView({super.key});
@@ -12,7 +13,7 @@ class OnboardView extends StatefulWidget {
   State<OnboardView> createState() => _OnboardViewState();
 }
 
-class _OnboardViewState extends State<OnboardView> {
+class _OnboardViewState extends OnboardViewModel {
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -33,8 +34,8 @@ class _OnboardViewState extends State<OnboardView> {
                   begin: Alignment.bottomCenter,
                   end: Alignment.topCenter,
                   colors: [
-                    Colors.black,
-                    Colors.black.withOpacity(0.4),
+                    ColorConstants.black.toColor,
+                    ColorConstants.black.toColor.withOpacity(0.4),
                   ],
                 ),
               ),
@@ -56,7 +57,7 @@ class _OnboardViewState extends State<OnboardView> {
                 flex: 1,
               ),
               Text(
-                '100K+ Premium Recipes',
+                recipes,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       color: ColorConstants.white.toColor,
                       fontWeight: FontWeight.w600,
@@ -66,7 +67,7 @@ class _OnboardViewState extends State<OnboardView> {
                 flex: 9,
               ),
               Text(
-                'Get\nCooking',
+                title,
                 style: Theme.of(context).textTheme.displayMedium?.copyWith(
                       color: ColorConstants.white.toColor,
                       fontWeight: FontWeight.w600,
@@ -77,7 +78,7 @@ class _OnboardViewState extends State<OnboardView> {
                 flex: 1,
               ),
               Text(
-                'Simple way to find Tasty Recipe',
+                description,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       color: ColorConstants.white.toColor,
                       fontWeight: FontWeight.w400,
@@ -89,7 +90,7 @@ class _OnboardViewState extends State<OnboardView> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 64),
                 child: MainElevatedButton(
-                  text: "Start Cooking",
+                  text: startCooking,
                   icon: Icons.arrow_forward_rounded,
                   onPressed: () {
                     Navigator.of(context).pushReplacement(

@@ -3,6 +3,7 @@ import 'package:sss_trainer_project/src/presentation/views/sign_in/sign_in_view.
 import 'package:sss_trainer_project/src/utils/constants/colors.dart';
 import 'package:sss_trainer_project/src/utils/constants/images.dart';
 
+import '../../../utils/constants/paddings.dart';
 import '../../widgets/buttons/double_text_w_button.dart';
 import '../../widgets/buttons/main_elevated_button.dart';
 import '../../widgets/buttons/social_media_button.dart';
@@ -23,7 +24,7 @@ class _SignUpViewState extends State<SignUpView> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32),
+          padding: const PaddingConstants.bigHorizontal(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

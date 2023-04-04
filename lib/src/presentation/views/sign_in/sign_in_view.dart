@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sss_trainer_project/src/presentation/views/sign_up/sign_up_view.dart';
+import 'package:sss_trainer_project/src/utils/constants/paddings.dart';
 
 import '../../../utils/constants/images.dart';
 import '../../widgets/buttons/double_text_w_button.dart';
@@ -22,7 +23,7 @@ class _SignInViewState extends State<SignInView> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32),
+          padding: const PaddingConstants.bigHorizontal(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
