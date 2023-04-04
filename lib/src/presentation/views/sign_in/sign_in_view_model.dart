@@ -13,11 +13,28 @@ abstract class SignInViewModel extends State<SignInView> {
   final String forgotPasswordText = 'Forgot Password?';
   final String signInText = 'Sign In';
   final String signUpText = 'Sign Up';
-  final String orSignInText = 'Or Sign In With';
+  final String orText = 'Or Sign In With';
   final String doNotHaveAnAccountText = 'Don\'t have an account?';
+
+  late final TextEditingController emailController, passwordController;
+
+  @override
+  void initState() {
+    super.initState();
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+  }
 
   void signIn() {
     //This function is called when the user clicks on the "Sign In" button and call the signIn function from the Firebase Service
+  }
+
+  void loginWithGoogle() {
+    //This function is called when the user clicks on the "Google" button and call the loginWithGoogle function from the Firebase Service
+  }
+
+  void loginWithFacebook() {
+    //This function is called when the user clicks on the "Facebook" button and call the loginWithFacebook function from the Firebase Service
   }
 
   void forgotPassword() {

@@ -38,6 +38,7 @@ class _SignInViewState extends SignInViewModel {
                 label: emailText,
                 keyboardType: TextInputType.emailAddress,
                 textInputAction: TextInputAction.next,
+                controller: emailController,
               ),
               const Spacer(flex: 2),
               CustomAuthField(
@@ -45,6 +46,7 @@ class _SignInViewState extends SignInViewModel {
                 label: passwordText,
                 obscureText: true,
                 textInputAction: TextInputAction.done,
+                controller: passwordController,
               ),
               const Spacer(flex: 1),
               TextButton(
@@ -56,21 +58,26 @@ class _SignInViewState extends SignInViewModel {
               const Spacer(flex: 1),
               MainElevatedButton(
                 text: signInText,
-                onPressed: () {},
+                onPressed: signIn,
                 icon: Icons.arrow_forward_rounded,
               ),
               const Spacer(flex: 1),
-              TextWithDivider(text: orSignInText),
+              TextWithDivider(text: orText),
               const Spacer(flex: 1),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SocialMediaButton(imagePath: ImageConstants.ic_google.toPath),
+                  SocialMediaButton(
+                    imagePath: ImageConstants.ic_google.toPath,
+                    onTap: loginWithGoogle,
+                  ),
                   const SizedBox(
                     width: 24,
                   ),
                   SocialMediaButton(
-                      imagePath: ImageConstants.ic_facebook.toPath),
+                    imagePath: ImageConstants.ic_facebook.toPath,
+                    onTap: loginWithFacebook,
+                  ),
                 ],
               ),
               const Spacer(flex: 2),

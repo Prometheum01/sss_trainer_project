@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sss_trainer_project/src/presentation/views/sign_in/sign_in_view.dart';
+import 'package:sss_trainer_project/src/presentation/views/sign_up/sign_up_view_model.dart';
 import 'package:sss_trainer_project/src/utils/constants/colors.dart';
 import 'package:sss_trainer_project/src/utils/constants/images.dart';
 
@@ -18,7 +18,7 @@ class SignUpView extends StatefulWidget {
   State<SignUpView> createState() => _SignUpViewState();
 }
 
-class _SignUpViewState extends State<SignUpView> {
+class _SignUpViewState extends SignUpViewModel {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,51 +28,56 @@ class _SignUpViewState extends State<SignUpView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const DoubleTitle(
-                title: "Create an account",
-                subtitle:
-                    "Let’s help you set up your account,\nit won’t take long.",
+              DoubleTitle(
+                title: titleText,
+                subtitle: subtitleText,
                 lightTitle: true,
               ),
               const Spacer(flex: 4),
-              const CustomAuthField(
-                hint: "Enter Name",
-                label: "Name",
+              CustomAuthField(
+                hint: nameHintText,
+                label: nameText,
                 keyboardType: TextInputType.name,
                 textInputAction: TextInputAction.next,
+                controller: nameController,
               ),
               const Spacer(flex: 1),
-              const CustomAuthField(
-                hint: "Enter Email",
-                label: "Email",
+              CustomAuthField(
+                hint: emailHintText,
+                label: emailText,
                 keyboardType: TextInputType.emailAddress,
                 textInputAction: TextInputAction.next,
+                controller: emailController,
               ),
               const Spacer(flex: 1),
-              const CustomAuthField(
-                hint: "Enter Password",
-                label: "Password",
+              CustomAuthField(
+                hint: passwordHintText,
+                label: passwordText,
                 obscureText: true,
                 textInputAction: TextInputAction.next,
+                controller: passwordController,
               ),
               const Spacer(flex: 1),
-              const CustomAuthField(
-                hint: "Retype Password",
-                label: "Confirm Password",
+              CustomAuthField(
+                hint: confirmPasswordHintText,
+                label: confirmPasswordText,
                 obscureText: true,
                 textInputAction: TextInputAction.done,
+                controller: confirmPasswordController,
               ),
               const Spacer(flex: 1),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Checkbox(
-                    value: false,
-                    onChanged: (value) {},
+                    value: acceptTermsAndConditionsValue,
+                    onChanged: (value) {
+                      acceptTermsAndConditions(value);
+                    },
                     visualDensity: VisualDensity.compact,
                   ),
                   Text(
-                    "Accept terms & Condition",
+                    acceptTermsAndConditionsText,
                     style: Theme.of(context).textTheme.labelMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: ColorConstants.orangePeel.toColor,
@@ -82,33 +87,32 @@ class _SignUpViewState extends State<SignUpView> {
               ),
               const Spacer(flex: 1),
               MainElevatedButton(
-                text: "Sign Up",
-                onPressed: () {},
+                text: signUpButtonText,
+                onPressed: signUp,
                 icon: Icons.arrow_forward_rounded,
               ),
               const Spacer(flex: 1),
-              const TextWithDivider(text: "Or Sign In With"),
+              TextWithDivider(text: orText),
               const Spacer(flex: 1),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SocialMediaButton(imagePath: ImageConstants.ic_google.toPath),
-                  const SizedBox(
-                    width: 24,
-                  ),
                   SocialMediaButton(
-                      imagePath: ImageConstants.ic_facebook.toPath),
+                    imagePath: ImageConstants.ic_google.toPath,
+                    onTap: loginWithGoogle,
+                  ),
+                  const SizedBox(width: 24),
+                  SocialMediaButton(
+                    imagePath: ImageConstants.ic_facebook.toPath,
+                    onTap: loginWithFacebook,
+                  ),
                 ],
               ),
               const Spacer(flex: 1),
               DoubleTextWithButton(
-                text: "Already a remember?",
-                buttonText: "Sign In",
-                onPressed: () {
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => const SignInView(),
-                  ));
-                },
+                text: alreadyHaveAnAccountText,
+                buttonText: signInButtonText,
+                onPressed: goToSignInView,
               ),
             ],
           ),
