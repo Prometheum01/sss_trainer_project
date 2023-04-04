@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sss_trainer_project/src/presentation/views/sign_in/sign_in_view_model.dart';
 import 'package:sss_trainer_project/src/utils/constants/paddings.dart';
+import 'package:sss_trainer_project/src/utils/extensions/validator.dart';
 
 import '../../../utils/constants/images.dart';
 import '../../widgets/buttons/double_text_w_button.dart';
@@ -33,20 +34,28 @@ class _SignInViewState extends SignInViewModel {
                 subtitle: subtitleText,
               ),
               const Spacer(flex: 6),
-              CustomAuthField(
-                hint: emailHintText,
-                label: emailText,
-                keyboardType: TextInputType.emailAddress,
-                textInputAction: TextInputAction.next,
-                controller: emailController,
-              ),
-              const Spacer(flex: 2),
-              CustomAuthField(
-                hint: passwordHintText,
-                label: passwordText,
-                obscureText: true,
-                textInputAction: TextInputAction.done,
-                controller: passwordController,
+              Form(
+                key: formKey,
+                child: Column(
+                  children: [
+                    CustomAuthField(
+                      hint: emailHintText,
+                      label: emailText,
+                      keyboardType: TextInputType.emailAddress,
+                      textInputAction: TextInputAction.next,
+                      controller: emailController,
+                      validator: (p0) => p0?.validateEmail(),
+                    ),
+                    CustomAuthField(
+                      hint: passwordHintText,
+                      label: passwordText,
+                      obscureText: true,
+                      textInputAction: TextInputAction.done,
+                      controller: passwordController,
+                      validator: (p0) => p0?.validatePassword(),
+                    ),
+                  ],
+                ),
               ),
               const Spacer(flex: 1),
               TextButton(

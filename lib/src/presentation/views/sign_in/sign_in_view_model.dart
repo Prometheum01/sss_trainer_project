@@ -17,6 +17,7 @@ abstract class SignInViewModel extends State<SignInView> {
   final String doNotHaveAnAccountText = 'Don\'t have an account?';
 
   late final TextEditingController emailController, passwordController;
+  late final formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -27,7 +28,13 @@ abstract class SignInViewModel extends State<SignInView> {
 
   void signIn() {
     //This function is called when the user clicks on the "Sign In" button and call the signIn function from the Firebase Service
+
+    if (validateFields) {
+      //Call the signIn function from the Firebase Service
+    }
   }
+
+  bool get validateFields => formKey.currentState?.validate() ?? false;
 
   void loginWithGoogle() {
     //This function is called when the user clicks on the "Google" button and call the loginWithGoogle function from the Firebase Service

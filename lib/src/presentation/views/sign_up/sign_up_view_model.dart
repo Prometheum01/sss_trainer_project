@@ -23,6 +23,8 @@ abstract class SignUpViewModel extends State<SignUpView> {
 
   bool acceptTermsAndConditionsValue = false;
 
+  late final formKey = GlobalKey<FormState>();
+
   late final TextEditingController nameController,
       emailController,
       passwordController,
@@ -39,7 +41,12 @@ abstract class SignUpViewModel extends State<SignUpView> {
 
   void signUp() {
     //This function is called when the user clicks on the "Sign Up" button and call the signUp function from the Firebase Service
+    if (validateFields) {
+      //Call the signUp function from the Firebase Service
+    }
   }
+
+  bool get validateFields => formKey.currentState?.validate() ?? false;
 
   void loginWithGoogle() {
     //This function is called when the user clicks on the "Google" button and call the loginWithGoogle function from the Firebase Service
