@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sss_trainer_project/src/presentation/views/sign_up/sign_up_view.dart';
+import 'package:sss_trainer_project/src/presentation/views/sign_in/sign_in_view_model.dart';
 import 'package:sss_trainer_project/src/utils/constants/paddings.dart';
 
 import '../../../utils/constants/images.dart';
@@ -17,7 +17,7 @@ class SignInView extends StatefulWidget {
   State<SignInView> createState() => _SignInViewState();
 }
 
-class _SignInViewState extends State<SignInView> {
+class _SignInViewState extends SignInViewModel {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,39 +28,39 @@ class _SignInViewState extends State<SignInView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Spacer(flex: 6),
-              const DoubleTitle(
-                title: "Hello,",
-                subtitle: "Welcome Back!",
+              DoubleTitle(
+                title: titleText,
+                subtitle: subtitleText,
               ),
               const Spacer(flex: 6),
-              const CustomAuthField(
-                hint: "Enter Email",
-                label: "Email",
+              CustomAuthField(
+                hint: emailHintText,
+                label: emailText,
                 keyboardType: TextInputType.emailAddress,
                 textInputAction: TextInputAction.next,
               ),
               const Spacer(flex: 2),
-              const CustomAuthField(
-                hint: "Enter Password",
-                label: "Password",
+              CustomAuthField(
+                hint: passwordHintText,
+                label: passwordText,
                 obscureText: true,
                 textInputAction: TextInputAction.done,
               ),
               const Spacer(flex: 1),
               TextButton(
-                onPressed: () {},
-                child: const Text(
-                  "Forgot Password?",
+                onPressed: forgotPassword,
+                child: Text(
+                  forgotPasswordText,
                 ),
               ),
               const Spacer(flex: 1),
               MainElevatedButton(
-                text: "Sign In",
+                text: signInText,
                 onPressed: () {},
                 icon: Icons.arrow_forward_rounded,
               ),
               const Spacer(flex: 1),
-              const TextWithDivider(text: "Or Sign In With"),
+              TextWithDivider(text: orSignInText),
               const Spacer(flex: 1),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -75,13 +75,9 @@ class _SignInViewState extends State<SignInView> {
               ),
               const Spacer(flex: 2),
               DoubleTextWithButton(
-                text: "Don't have an account? ",
-                buttonText: "Sign Up",
-                onPressed: () {
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => const SignUpView(),
-                  ));
-                },
+                text: doNotHaveAnAccountText,
+                buttonText: signUpText,
+                onPressed: goToSignUpView,
               ),
               const Spacer(flex: 1),
             ],

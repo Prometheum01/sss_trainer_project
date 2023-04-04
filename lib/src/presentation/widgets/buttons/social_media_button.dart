@@ -6,14 +6,16 @@ class SocialMediaButton extends StatelessWidget {
   const SocialMediaButton({
     super.key,
     required this.imagePath,
+    this.onTap,
   });
 
   final String imagePath;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: onTap,
       borderRadius: BorderRadius.circular(10),
       child: Ink(
         decoration: BoxDecoration(
