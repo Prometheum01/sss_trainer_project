@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sss_trainer_project/src/presentation/views/onboard/onboard_view.dart';
 import 'package:sss_trainer_project/src/utils/constants/colors.dart';
+import 'package:sss_trainer_project/src/utils/constants/decoration.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,6 +16,13 @@ class MyApp extends StatelessWidget {
       title: 'SSS Trainer',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        inputDecorationTheme: InputDecorationTheme(
+          enabledBorder: CustomOutlineInputBorders.textFieldBorder(),
+          focusedBorder: CustomOutlineInputBorders.textFieldBorder(),
+          hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: ColorConstants.lightGrey.toColor,
+              ),
+        ),
         dividerTheme: DividerThemeData(
           thickness: 1,
           color: ColorConstants.lightGrey.toColor,
