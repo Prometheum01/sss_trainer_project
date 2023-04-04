@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sss_trainer_project/src/presentation/views/sign_up/sign_up_view.dart';
+import 'package:sss_trainer_project/src/presentation/views/sign_in/sign_in_view.dart';
+import 'package:sss_trainer_project/src/utils/constants/colors.dart';
+import 'package:sss_trainer_project/src/utils/constants/images.dart';
 
-import '../../../utils/constants/images.dart';
 import '../../widgets/buttons/double_text_w_button.dart';
 import '../../widgets/buttons/main_elevated_button.dart';
 import '../../widgets/buttons/social_media_button.dart';
@@ -9,14 +10,14 @@ import '../../widgets/text_fields/custom_auth_field.dart';
 import '../../widgets/texts/double_title.dart';
 import '../../widgets/texts/text_w_dividers.dart';
 
-class SignInView extends StatefulWidget {
-  const SignInView({super.key});
+class SignUpView extends StatefulWidget {
+  const SignUpView({super.key});
 
   @override
-  State<SignInView> createState() => _SignInViewState();
+  State<SignUpView> createState() => _SignUpViewState();
 }
 
-class _SignInViewState extends State<SignInView> {
+class _SignUpViewState extends State<SignUpView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,35 +27,61 @@ class _SignInViewState extends State<SignInView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Spacer(flex: 6),
               const DoubleTitle(
-                title: "Hello,",
-                subtitle: "Welcome Back!",
+                title: "Create an account",
+                subtitle:
+                    "Let’s help you set up your account,\nit won’t take long.",
+                lightTitle: true,
               ),
-              const Spacer(flex: 6),
+              const Spacer(flex: 4),
+              const CustomAuthField(
+                hint: "Enter Name",
+                label: "Name",
+                keyboardType: TextInputType.name,
+                textInputAction: TextInputAction.next,
+              ),
+              const Spacer(flex: 1),
               const CustomAuthField(
                 hint: "Enter Email",
                 label: "Email",
                 keyboardType: TextInputType.emailAddress,
                 textInputAction: TextInputAction.next,
               ),
-              const Spacer(flex: 2),
+              const Spacer(flex: 1),
               const CustomAuthField(
                 hint: "Enter Password",
                 label: "Password",
                 obscureText: true,
+                textInputAction: TextInputAction.next,
+              ),
+              const Spacer(flex: 1),
+              const CustomAuthField(
+                hint: "Retype Password",
+                label: "Confirm Password",
+                obscureText: true,
                 textInputAction: TextInputAction.done,
               ),
               const Spacer(flex: 1),
-              TextButton(
-                onPressed: () {},
-                child: const Text(
-                  "Forgot Password?",
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Checkbox(
+                    value: false,
+                    onChanged: (value) {},
+                    visualDensity: VisualDensity.compact,
+                  ),
+                  Text(
+                    "Accept terms & Condition",
+                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: ColorConstants.orangePeel.toColor,
+                        ),
+                  ),
+                ],
               ),
               const Spacer(flex: 1),
               MainElevatedButton(
-                text: "Sign In",
+                text: "Sign Up",
                 onPressed: () {},
                 icon: Icons.arrow_forward_rounded,
               ),
@@ -72,17 +99,16 @@ class _SignInViewState extends State<SignInView> {
                       imagePath: ImageConstants.ic_facebook.toPath),
                 ],
               ),
-              const Spacer(flex: 2),
+              const Spacer(flex: 1),
               DoubleTextWithButton(
-                text: "Don't have an account? ",
-                buttonText: "Sign Up",
+                text: "Already a remember?",
+                buttonText: "Sign In",
                 onPressed: () {
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => const SignUpView(),
+                    builder: (context) => const SignInView(),
                   ));
                 },
               ),
-              const Spacer(flex: 1),
             ],
           ),
         ),

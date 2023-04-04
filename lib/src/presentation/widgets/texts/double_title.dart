@@ -6,28 +6,30 @@ class DoubleTitle extends StatelessWidget {
     super.key,
     required this.title,
     required this.subtitle,
+    this.lightTitle = false,
   });
 
   final String title, subtitle;
+  final bool lightTitle;
 
   @override
   Widget build(BuildContext context) {
     return RichText(
       text: TextSpan(
         text: title,
-        style: TextStyle(
-          fontSize: 30,
-          fontWeight: FontWeight.w600,
-          color: ColorConstants.black.toColor,
-        ),
+        style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+              fontSize: lightTitle ? 20 : 30,
+              fontWeight: FontWeight.w600,
+              color: ColorConstants.black.toColor,
+            ),
         children: [
           TextSpan(
             text: "\n$subtitle",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w400,
-              color: ColorConstants.onyx.toColor,
-            ),
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  fontSize: lightTitle ? 11 : 20,
+                  fontWeight: FontWeight.w400,
+                  color: ColorConstants.onyx.toColor,
+                ),
           ),
         ],
       ),

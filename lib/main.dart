@@ -16,6 +16,21 @@ class MyApp extends StatelessWidget {
       title: 'SSS Trainer',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        checkboxTheme: CheckboxThemeData(
+          fillColor: MaterialStateProperty.resolveWith<Color>(
+              (Set<MaterialState> states) {
+            if (states.contains(MaterialState.disabled)) {
+              return ColorConstants.orangePeel.toColor.withOpacity(.32);
+            }
+            return ColorConstants.orangePeel.toColor;
+          }),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5),
+            side: BorderSide(
+              color: ColorConstants.orangePeel.toColor,
+            ),
+          ),
+        ),
         inputDecorationTheme: InputDecorationTheme(
           enabledBorder: CustomOutlineInputBorders.textFieldBorder(),
           focusedBorder: CustomOutlineInputBorders.textFieldBorder(),

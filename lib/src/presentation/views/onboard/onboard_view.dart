@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sss_trainer_project/src/presentation/views/sign_in/sign_in_view.dart';
 import 'package:sss_trainer_project/src/utils/constants/colors.dart';
 
 import '../../../utils/constants/images.dart';
@@ -91,7 +92,11 @@ class _OnboardViewState extends State<OnboardView> {
                   text: "Start Cooking",
                   icon: Icons.arrow_forward_rounded,
                   onPressed: () {
-                    //navigateToSignIn();
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) => const SignInView(),
+                      ),
+                    );
                   },
                 ),
               ),

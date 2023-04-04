@@ -7,6 +7,7 @@ enum ColorConstants {
   black(0xFF000000), // Black bold texts.
   white(0xFFFFFFFF), // White texts.
   orangePeel(0xFFFF9C00), // Text Buttons
+  cloudyGrey(0xFF696969), // shadow color.
   ;
 
   final int value;
