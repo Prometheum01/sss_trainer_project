@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sss_trainer_project/src/presentation/views/sign_in/sign_in_view.dart';
 
+import '../../../utils/constants/navigator_routers.dart';
 import 'onboard_view.dart';
 
 abstract class OnboardViewModel extends State<OnboardView> {
@@ -11,8 +11,6 @@ abstract class OnboardViewModel extends State<OnboardView> {
 
   void goToSignInView() {
     //This function is called when the user clicks on the "Start Cooking" button
-    Navigator.of(context).pushReplacement(MaterialPageRoute(
-      builder: (context) => const SignInView(),
-    ));
+    Navigator.of(context).pushReplacementNamed(NavigatorRoutes.signIn.route);
   }
 }

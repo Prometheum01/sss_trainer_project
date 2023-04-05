@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:sss_trainer_project/src/data/data_sources/remote/auth_service.dart';
+import 'package:sss_trainer_project/src/presentation/views/home/home_view.dart';
 import 'package:sss_trainer_project/src/presentation/views/onboard/onboard_view.dart';
+import 'package:sss_trainer_project/src/presentation/views/sign_in/sign_in_view.dart';
+import 'package:sss_trainer_project/src/presentation/views/sign_up/sign_up_view.dart';
 import 'package:sss_trainer_project/src/utils/constants/colors.dart';
-import 'package:sss_trainer_project/src/utils/constants/decoration.dart';
+import 'package:sss_trainer_project/src/utils/constants/decorations.dart';
+import 'package:sss_trainer_project/src/utils/constants/navigator_routers.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -68,7 +74,32 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const OnboardView(),
+      routes: {
+        NavigatorRoutes.onboard.route: (context) => const OnboardView(),
+        NavigatorRoutes.home.route: (context) => const HomeView(),
+        NavigatorRoutes.signIn.route: (context) => const SignInView(),
+        NavigatorRoutes.signUp.route: (context) => const SignUpView(),
+      },
+      home: FutureBuilder(
+        future: AuthService.firebase().initialize(),
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.done:
+              final user = AuthService.firebase().currentUser;
+              if (user != null) {
+                return const HomeView();
+              } else {
+                return const OnboardView();
+              }
+            default:
+              return const Scaffold(
+                body: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+          }
+        },
+      ),
     );
   }
 }

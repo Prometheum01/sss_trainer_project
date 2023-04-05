@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:sss_trainer_project/src/data/data_sources/remote/auth_service.dart';
 import 'package:sss_trainer_project/src/presentation/views/sign_up/sign_up_view.dart';
 
-import '../sign_in/sign_in_view.dart';
+import '../../../utils/constants/navigator_routers.dart';
 
 abstract class SignUpViewModel extends State<SignUpView> {
   final String titleText = 'Create an account';
@@ -39,14 +40,35 @@ abstract class SignUpViewModel extends State<SignUpView> {
     confirmPasswordController = TextEditingController();
   }
 
-  void signUp() {
+  Future<void> signUp() async {
     //This function is called when the user clicks on the "Sign Up" button and call the signUp function from the Firebase Service
     if (validateFields) {
       //Call the signUp function from the Firebase Service
+      final user = await AuthService.firebase().createUserWithEmailAndPassword(
+        emailController.text.trim(),
+        passwordController.text.trim(),
+      );
+
+      if (user != null) {
+        Navigator.of(context).pushReplacementNamed(NavigatorRoutes.home.route);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Something went wrong')),
+        );
+      }
     }
   }
 
-  bool get validateFields => formKey.currentState?.validate() ?? false;
+  bool get validateFields {
+    if (passwordController.text.trim() !=
+        confirmPasswordController.text.trim()) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Passwords do not match')),
+      );
+      return false;
+    }
+    return formKey.currentState?.validate() ?? false;
+  }
 
   void loginWithGoogle() {
     //This function is called when the user clicks on the "Google" button and call the loginWithGoogle function from the Firebase Service
@@ -58,9 +80,7 @@ abstract class SignUpViewModel extends State<SignUpView> {
 
   void goToSignInView() {
     //This function is called when the user clicks on the "Sign In" button and navigate to the SignInView
-    Navigator.of(context).pushReplacement(MaterialPageRoute(
-      builder: (context) => const SignInView(),
-    ));
+    Navigator.of(context).pushReplacementNamed(NavigatorRoutes.signIn.route);
   }
 
   void acceptTermsAndConditions(bool? value) {

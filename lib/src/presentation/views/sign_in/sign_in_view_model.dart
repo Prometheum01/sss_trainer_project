@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sss_trainer_project/src/presentation/views/sign_in/sign_in_view.dart';
 
-import '../sign_up/sign_up_view.dart';
+import '../../../data/data_sources/remote/auth_service.dart';
+import '../../../utils/constants/navigator_routers.dart';
 
 abstract class SignInViewModel extends State<SignInView> {
   final String titleText = 'Hello,';
@@ -26,11 +27,24 @@ abstract class SignInViewModel extends State<SignInView> {
     passwordController = TextEditingController();
   }
 
-  void signIn() {
+  Future<void> signIn() async {
     //This function is called when the user clicks on the "Sign In" button and call the signIn function from the Firebase Service
 
     if (validateFields) {
       //Call the signIn function from the Firebase Service
+
+      final user = await AuthService.firebase().signInWithEmailAndPassword(
+        emailController.text.trim(),
+        passwordController.text.trim(),
+      );
+
+      if (user != null) {
+        Navigator.of(context).pushReplacementNamed(NavigatorRoutes.home.route);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Invalid email or password')),
+        );
+      }
     }
   }
 
@@ -50,8 +64,6 @@ abstract class SignInViewModel extends State<SignInView> {
 
   void goToSignUpView() {
     //This function is called when the user clicks on the "Sign Up" button and navigate to the SignUpView
-    Navigator.of(context).pushReplacement(MaterialPageRoute(
-      builder: (context) => const SignUpView(),
-    ));
+    Navigator.of(context).pushReplacementNamed(NavigatorRoutes.signUp.route);
   }
 }
