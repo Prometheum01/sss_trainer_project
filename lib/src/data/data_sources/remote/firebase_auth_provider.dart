@@ -9,8 +9,6 @@ import '../../../../firebase_options.dart';
 class FirebaseAuthProvider extends AuthProvider {
   @override
   Future<FirebaseApp> initialize() async {
-    print("FirebaseAuthProvider.initialize()");
-
     return await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
@@ -41,7 +39,6 @@ class FirebaseAuthProvider extends AuthProvider {
         throw GenericAuthException();
       }
     } catch (_) {
-      print(_.toString());
       throw GenericAuthException();
     }
   }

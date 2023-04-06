@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sss_trainer_project/src/presentation/views/sign_in/sign_in_view.dart';
+import 'package:sss_trainer_project/src/utils/exceptions/auth_exceptions.dart';
 
 import '../../../data/data_sources/remote/auth_service.dart';
 import '../../../utils/constants/navigator_routers.dart';
@@ -33,16 +34,39 @@ abstract class SignInViewModel extends State<SignInView> {
     if (validateFields) {
       //Call the signIn function from the Firebase Service
 
-      final user = await AuthService.firebase().signInWithEmailAndPassword(
-        emailController.text.trim(),
-        passwordController.text.trim(),
-      );
+      try {
+        await AuthService.firebase().signInWithEmailAndPassword(
+          emailController.text.trim(),
+          passwordController.text.trim(),
+        );
 
-      if (user != null) {
-        Navigator.of(context).pushReplacementNamed(NavigatorRoutes.home.route);
-      } else {
+        final user = AuthService.firebase().currentUser;
+
+        if (user != null) {
+          // ignore: use_build_context_synchronously
+          Navigator.of(context)
+              .pushReplacementNamed(NavigatorRoutes.home.route);
+        } else {
+          // ignore: use_build_context_synchronously
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('An error occurred')),
+          );
+        }
+      } on UserNotFoundAuthException {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Invalid email or password')),
+          const SnackBar(content: Text('User not found')),
+        );
+      } on WrongPasswordAuthException {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Wrong password')),
+        );
+      } on GenericAuthException {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('An error occurred')),
+        );
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('An error occurred')),
         );
       }
     }

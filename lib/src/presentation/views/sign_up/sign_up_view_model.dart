@@ -3,6 +3,7 @@ import 'package:sss_trainer_project/src/data/data_sources/remote/auth_service.da
 import 'package:sss_trainer_project/src/presentation/views/sign_up/sign_up_view.dart';
 
 import '../../../utils/constants/navigator_routers.dart';
+import '../../../utils/exceptions/auth_exceptions.dart';
 
 abstract class SignUpViewModel extends State<SignUpView> {
   final String titleText = 'Create an account';
@@ -44,30 +45,64 @@ abstract class SignUpViewModel extends State<SignUpView> {
     //This function is called when the user clicks on the "Sign Up" button and call the signUp function from the Firebase Service
     if (validateFields) {
       //Call the signUp function from the Firebase Service
-      final user = await AuthService.firebase().createUserWithEmailAndPassword(
-        emailController.text.trim(),
-        passwordController.text.trim(),
-      );
+      try {
+        await AuthService.firebase().createUserWithEmailAndPassword(
+          emailController.text.trim(),
+          passwordController.text.trim(),
+        );
 
-      if (user != null) {
-        Navigator.of(context).pushReplacementNamed(NavigatorRoutes.home.route);
-      } else {
+        final user = AuthService.firebase().currentUser;
+
+        if (user != null) {
+          // ignore: use_build_context_synchronously
+          Navigator.of(context)
+              .pushReplacementNamed(NavigatorRoutes.home.route);
+        } else {
+          // ignore: use_build_context_synchronously
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('An error occurred')),
+          );
+        }
+      } on WeakPasswordAuthException {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Something went wrong')),
+          const SnackBar(content: Text('Weak password')),
+        );
+      } on EmailAlreadyInUseAuthException {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Email already in use')),
+        );
+      } on InvalidEmailAuthException {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Invalid email')),
+        );
+      } on GenericAuthException {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('An error occurred')),
+        );
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('An error occurred')),
         );
       }
     }
   }
 
   bool get validateFields {
-    if (passwordController.text.trim() !=
-        confirmPasswordController.text.trim()) {
+    if (acceptTermsAndConditionsValue == false) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Passwords do not match')),
+        const SnackBar(content: Text('Please accept terms & conditions')),
       );
       return false;
+    } else {
+      if (passwordController.text.trim() !=
+          confirmPasswordController.text.trim()) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Passwords do not match')),
+        );
+        return false;
+      }
+      return formKey.currentState?.validate() ?? false;
     }
-    return formKey.currentState?.validate() ?? false;
   }
 
   void loginWithGoogle() {
